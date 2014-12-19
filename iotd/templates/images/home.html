@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+.bigpic {
+  background: url({{ image.img.url }}) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <h1>{{ image.name }}</h1>
+    <p>{{ image.tagline }}</p>
+  </div>
+</div>
+
+{% endblock %}
