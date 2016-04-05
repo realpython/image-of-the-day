@@ -22,8 +22,6 @@ SECRET_KEY = '-r5cw=c2xk9!v87m2(3av2cdr!!k_4+pj&c6qc_p_o^1%m8nh^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -57,28 +55,16 @@ WSGI_APPLICATION = 'iotd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-       'default': {
-             'ENGINE':'django.db.backends.postgresql_psycopg2',
-             'NAME': os.environ['RDS_DB_NAME'],
-             'USER': os.environ['RDS_USERNAME'],
-             'PASSWORD': os.environ['RDS_PASSWORD'],
-             'HOST': os.environ['RDS_HOSTNAME'],
-             'PORT': os.environ['RDS_PORT'],
-             }
-          }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'iotd',
-            'USER': 'iotd',
-            'PASSWORD': 'iotd',
-            'HOST' : 'localhost',
-            'PORT' : '5432',
-        }
-    } 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'iotd',
+        'USER': 'iotd',
+        'PASSWORD': 'iotd',
+        'HOST' : 'localhost',
+        'PORT' : '5432',
+    }
+} 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -105,5 +91,25 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "www", "media")
 MEDIA_URL = '/media/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'debug':True,
+        },
+    },
+]
 
