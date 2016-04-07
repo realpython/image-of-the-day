@@ -55,16 +55,29 @@ WSGI_APPLICATION = 'iotd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'iotd',
-        'USER': 'iotd',
-        'PASSWORD': 'iotd',
-        'HOST' : 'localhost',
-        'PORT' : '5432',
+
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-} 
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'iotd',
+            'USER': 'iotd',
+            'PASSWORD': 'iotd',
+            'HOST' : 'localhost',
+            'PORT' : '5432',
+        }
+    } 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -81,9 +94,8 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
