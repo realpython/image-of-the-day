@@ -1,0 +1,13 @@
+branch-defaults:
+  default:
+    environment: iotd-test
+    group_suffix: null
+  start_here_py3:
+    environment: iotd-test
+global:
+  application_name: iotd
+  default_ec2_keyname: aws-eb-iotd
+  default_platform: Python 3.4
+  default_region: us-east-1
+  profile: eb-cli
+  sc: null
